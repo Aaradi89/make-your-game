@@ -1,0 +1,62 @@
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+
+:root {
+    --hue: 200;
+    --saturation: 50%;
+    --forgroung-color: hsl(var(--hue), var(--saturation), 75%);
+    --background-color: hsl(var(--hue), var(--saturation), 20%);
+}
+
+
+body {
+    margin: 0;
+    background-color: var(--background-color) ;
+    overflow: hidden;
+}
+
+.paddle {
+    --position: 50;
+    --width: 10;
+    position: absolute;
+    bottom: 1vh;
+    width:  calc(var(--width)*1vw);
+    height: 1vh;
+    background-color: var(--forgroung-color);
+    left: calc(var(--position) * 1%);
+    transform: translateX(-50%);
+}
+
+.border{
+    position: absolute;
+    height: 60vh;
+    width: 70vw;
+    border: solid 0.3vh var(--forgroung-color);
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+}
+
+.ball{
+
+    --x: 53;
+    --y: 2;
+    border-radius: 50%;
+    position: absolute;
+    background-color: var(--forgroung-color);
+    height: 2vh;
+    width: 2vh;
+    transform: translate(-50%, -50%);
+    left: calc(var(--x)* 1%);
+    bottom: calc(var(--y)* 1%);
+}
+
+.score{
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 7vh;
+    color: var(--forgroung-color);
+    opacity: 0.6;
+}
