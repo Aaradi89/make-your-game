@@ -4,7 +4,9 @@
 
 :root {
     --hue: 200;
+    --blockHue: 50;
     --saturation: 50%;
+    --blocks-color: hsl(var(--blockHue), var(--saturation), 40%);
     --forgroung-color: hsl(var(--hue), var(--saturation), 75%);
     --background-color: hsl(var(--hue), var(--saturation), 20%);
 }
@@ -59,4 +61,12 @@ body {
     font-size: 7vh;
     color: var(--forgroung-color);
     opacity: 0.6;
+}
+
+.block{
+    position: absolute;
+    height: 2vh;
+    width: 10vw;
+    background-color: var(--blocks-color);
+    border: solid 0.1vh black;
 }

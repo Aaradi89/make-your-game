@@ -1,3 +1,7 @@
+import Border from "./border.js";
+
+const border = new Border(document.getElementById("border"))
+const borderRect = border.rect() 
 export default class Paddle{
     constructor(paddleE){
         this.paddleElem = paddleE
@@ -20,6 +24,19 @@ export default class Paddle{
         this.paddleElem.style.setProperty("--width", value)
     }
 
+    paddlleMove(x){
+        const paddleWidth = this.rect().width
+        
+        if (x >= borderRect.left + paddleWidth/2 && x <= borderRect.right - paddleWidth/2){
+        this.position = ((x- borderRect.left) / (borderRect.width)) * 100
+        
+        } else if (x <= borderRect.left + paddleWidth/2){
+        this.position = (paddleWidth/2) / (borderRect.width) * 100
+        
+        }  else if (x >= borderRect.right - paddleWidth/2){
+         this.position = (borderRect.width - paddleWidth/2)/ (borderRect.width) * 100
+        }
+    }
 }
 
 
