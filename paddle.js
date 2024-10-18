@@ -24,7 +24,7 @@ export default class Paddle{
         this.paddleElem.style.setProperty("--width", value)
     }
 
-    paddlleMove(x){
+    paddleMove(x){
         const paddleWidth = this.rect().width
         
         if (x >= borderRect.left + paddleWidth/2 && x <= borderRect.right - paddleWidth/2){

@@ -7,7 +7,6 @@ export default class Block{
         this.block.style.top = y + 'px';
         borderElement.appendChild(this.block);
 
-
     }
     rect(){
         return this.block.getBoundingClientRect();
@@ -15,7 +14,8 @@ export default class Block{
 
     
     collision(){
-        
+        const score = document.getElementById('score');
+        score.textContent = parseInt(score.textContent) + 1
         this.block.remove()
     }
 }

@@ -40,7 +40,6 @@ export default class Ball{
     pause(){
         this.oldDirection = this.direction
         this.direction = {x:0, y:0}
-        console.log(this.direction)
     }
 
     resume(){
@@ -88,7 +87,7 @@ export default class Ball{
             this.direction.y *= -1;
             }
         })){
-            
+
         }
     }
 }    

@@ -7,6 +7,7 @@ const ball = new Ball(document.getElementById("ball"))
 const border = new Border(document.getElementById("border"))
 const paddle = new Paddle(document.getElementById("paddle"))
 const borderElement = document.getElementById("border")
+const score = document.getElementById("score")
 const borderRect = border.rect()
 const paddleRect = paddle.rect();
 let lastTime;
@@ -19,6 +20,8 @@ let lvl = -1;
 level(lvl)
 
 
+
+
 function update (time){
 
 if (lastTime != null){
@@ -27,9 +30,10 @@ if (lastTime != null){
 }
 lastTime = time;
 
-if (blocks.length == 0){
+if (score.textContent == (lvl + 2) * 6  && gameOn) { 
 Pause()
 }
+
 
 window.requestAnimationFrame(update)
 }
@@ -39,7 +43,7 @@ window.requestAnimationFrame(update);
 document.addEventListener("mousemove", function(m){
 mouseX = m.x
    if (gameOn){ 
-    paddle.paddlleMove(mouseX )
+    paddle.paddleMove(mouseX )
 ;} 
 })
 
@@ -68,7 +72,8 @@ function Pause() {
         gameOn = false
     } else if (!gameOn){
         ball.resume()
-        paddle.paddlleMove(mouseX) 
+        paddle.paddleMove(mouseX) 
         gameOn = true
     }
+    console.log(gameOn)
 }
