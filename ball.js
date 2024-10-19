@@ -30,11 +30,18 @@ export default class Ball{
     reset(){
         this.x= 53;
         this.y= 2;
-
-        const heading = (2 * Math.PI)/8;
-        this.direction = {x: Math.cos(heading), y: Math.sin(heading)}
+        this.gameStarted= false;
+        //const heading = (2 * Math.PI)/8;
+        //this.direction = {x: Math.cos(heading), y: Math.sin(heading)}
+        this.direction = {x:0, y:0}
        
         this.velocity = INITIAL_VELOCITY
+    }
+
+    start(){
+        this.gameStarted = true;
+        const heading = (2 * Math.PI)/8;
+        this.direction = {x: Math.cos(heading), y: Math.sin(heading)}
     }
 
     pause(){
@@ -50,13 +57,16 @@ export default class Ball{
         const paddleRect = paddle.rect()
         const borderRect =  border.rect()
         const oldX = this.x
-        const oldY = this.y
+        const oldY = this.y 
 
         this.x +=  this.direction.x * this.velocity * delta;
         this.y +=  this.direction.y * this.velocity * delta;
 
         const rect = this.rect();
-
+        
+        if (!this.gameStarted){
+            this.x = paddle.position + 3
+        }
     
 
         if (rect.bottom > borderRect.bottom || rect.top < borderRect.top){
@@ -109,13 +119,12 @@ if (this.direction.x > 0 && this.x < paddle.position ){
                 if (blockRect.left >= rect.right &&
                     blockRect.right <= rect.left){
                         this.direction.x *= -1;
+                    } else {
+                        this.direction.y *= -1;  
                     }
 
             block.collision()
-            this.direction.y *= -1;
             }
-        })){
-
-        }
+        })){}
     }
 }    

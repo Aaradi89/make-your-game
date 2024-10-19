@@ -3,8 +3,10 @@ export default class Block{
         this.block = document.createElement('div');
         this.block.className = 'block';
         this.block.id = 'block';
-        this.block.style.left =  x + 'px';
-        this.block.style.top = y + 'px';
+        // this.block.style.left =  x + 'px';
+        // this.block.style.top = y + 'px';
+        this.block.style.left =  x + '%';
+        this.block.style.top = y + '%';
         borderElement.appendChild(this.block);
 
     }
