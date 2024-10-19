@@ -46,18 +46,26 @@ export default class Ball{
         this.direction = this.oldDirection
     }
 
-    update(delta, borderRect, paddleRect, blocks){
+    update(delta, border, paddle, blocks){
+        const paddleRect = paddle.rect()
+        const borderRect =  border.rect()
+        const oldX = this.x
+        const oldY = this.y
+
         this.x +=  this.direction.x * this.velocity * delta;
         this.y +=  this.direction.y * this.velocity * delta;
 
         const rect = this.rect();
+
     
 
-        if (rect.bottom >= borderRect.bottom || rect.top <= borderRect.top){
+        if (rect.bottom > borderRect.bottom || rect.top < borderRect.top){
+           this.y = oldY
             this.direction.y *= -1;
         }
 
-        if (rect.left <= borderRect.left || rect.right >=borderRect.right){
+        if (rect.left < borderRect.left || rect.right >borderRect.right){
+            this.x = oldX
             this.direction.x *= -1;
         }
         
@@ -69,8 +77,19 @@ export default class Ball{
             paddleRect.bottom >= rect.top &&
             paddleRect.top <= rect.bottom){
                 
+                this.x = oldX
+                this.y = oldY
 
-            this.direction.y *= -1;
+if (this.direction.x > 0 && this.x < paddle.position ){
+    this.direction.x *= -1;
+    console.log('should change')
+} else if (this.direction.x < 0 && this.x > paddle.position ){
+    this.direction.x *= -1;
+    console.log('should change')
+}
+
+
+                this.direction.y *= -1;
                
             }
         
@@ -83,6 +102,15 @@ export default class Ball{
             blockRect.bottom >= rect.top &&
             blockRect.top <= rect.bottom
             ){
+                
+                this.x = oldX
+                this.y = oldY
+
+                if (blockRect.left >= rect.right &&
+                    blockRect.right <= rect.left){
+                        this.direction.x *= -1;
+                    }
+
             block.collision()
             this.direction.y *= -1;
             }

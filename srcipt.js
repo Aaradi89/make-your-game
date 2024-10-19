@@ -26,13 +26,13 @@ function update (time){
 
 if (lastTime != null){
     const delta = time - lastTime;
-    ball.update(delta,borderRect,paddle.rect(), blocks); 
+    ball.update(delta,border,paddle, blocks); 
 }
 lastTime = time;
 
 if (score.textContent == (lvl + 2) * 6  && gameOn) { 
 Pause()
-}
+} // to be edited to detect game winning
 
 
 window.requestAnimationFrame(update)
