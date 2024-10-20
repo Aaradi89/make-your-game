@@ -24,7 +24,7 @@ export default class Paddle{
         this.paddleElem.style.setProperty("--width", value)
     }
 
-    reset(){}
+    
 
     paddleMove(x){
         const paddleWidth = this.rect().width

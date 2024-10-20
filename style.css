@@ -70,3 +70,17 @@ body {
     background-color: var(--blocks-color);
     border: solid 0.1vh black;
 }
+
+.winner{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5vw;
+    left : 50%;
+    top : 50%;
+    height: 5vh;
+    width: 20vw;
+    transform : translate(-50%, -50%);
+    color: var(--forgroung-color);
+}

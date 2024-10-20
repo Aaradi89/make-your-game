@@ -92,10 +92,10 @@ export default class Ball{
 
 if (this.direction.x > 0 && this.x < paddle.position ){
     this.direction.x *= -1;
-    console.log('should change')
+    
 } else if (this.direction.x < 0 && this.x > paddle.position ){
     this.direction.x *= -1;
-    console.log('should change')
+    
 }
 
 
@@ -112,15 +112,21 @@ if (this.direction.x > 0 && this.x < paddle.position ){
             blockRect.bottom >= rect.top &&
             blockRect.top <= rect.bottom
             ){
-                
                 this.x = oldX
                 this.y = oldY
+                // console.log(" ball R  : " +   rect.right)
+                // console.log(" Ball L  : " +  rect.left)
+                // console.log(" blockRect \nL: " + blockRect.left + "\nR: " + blockRect.right + "\nB: " + blockRect.bottom + "\nT: " + blockRect.top )
+                // this.x = oldX
+                // this.y = oldY
 
-                if (blockRect.left >= rect.right &&
+                if (blockRect.left >= rect.right ||
                     blockRect.right <= rect.left){
                         this.direction.x *= -1;
+                        console.log("X changed : " +  this.direction)
                     } else {
                         this.direction.y *= -1;  
+                        //console.log("Y changed : " +  this.direction)
                     }
 
             block.collision()

@@ -14,15 +14,19 @@ let lastTime;
 let gameOn = false;
 let mouseX;
 let blocks = [];
-let lvl = -1;
+let lvl = 1;
 let winCounter;
-let gameStart = false; 
+let gameStart = false;
+let gameEnd = false;
+let live = 3;
+const winGame = 3;
 
+// add block to the board
 level(lvl)
 
 
 
-
+// game loop logic
 function update (time){
 
 if (lastTime != null){
@@ -31,18 +35,26 @@ if (lastTime != null){
 }
 lastTime = time;
 
-if (score.textContent == winCounter  && gameOn) { 
+if (score.textContent == winCounter  && gameOn && lvl < winGame) { 
 ball.reset();
 gameStart = false; 
 lvl++;
 level(lvl);
 } // to be edited to detect game winning
 
-
-window.requestAnimationFrame(update)
+if (score.textContent == winCounter  && lvl == winGame && !gameEnd) {
+    console.log("game ended");
+    Pause();
+    winScreen();
+}else{
+    window.requestAnimationFrame(update)
+}
 }
 
 window.requestAnimationFrame(update);
+
+
+// move paddle with mouse
 
 document.addEventListener("mousemove", function(m){
 mouseX = m.x
@@ -51,10 +63,18 @@ mouseX = m.x
 ;} 
 })
 
+// use space to pause the game
 document.addEventListener("keydown", e=>{
     if (e.code === "Space"){
         Pause()
     } 
+    // testing
+    if(e.code ==="KeyA"){
+        blocks.forEach(element => {
+            element.collision()
+            console.log("collision")
+        });
+    }
 })
 
 
@@ -102,3 +122,13 @@ document.addEventListener("mousedown",e=>{
         start();
     }
 })
+
+
+function winScreen(){
+    const winner = document.createElement("div");
+    winner.className = "winner";
+    winner.textContent = "WINNER";
+    borderElement.appendChild(winner);
+    gameEnd = true;
+    console.log(gameEnd);
+}
