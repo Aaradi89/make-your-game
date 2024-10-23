@@ -54,14 +54,24 @@ body {
     bottom: calc(var(--y)* 1%);
 }
 
-.score{
+/* .score{
     display: flex;
     justify-content: center;
     font-weight: bold;
     font-size: 7vh;
     color: var(--forgroung-color);
     opacity: 0.6;
+} */
+
+.score{
+    padding-left: 2vw;
+    padding-right: 2vw;
+    font-weight: bold;
+    font-size: 7vh;
+    color: var(--forgroung-color);
+    opacity: 0.6;
 }
+
 
 .block{
     position: absolute;
@@ -71,16 +81,17 @@ body {
     border: solid 0.1vh black;
 }
 
-.winner{
+.ending{
     position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 5vw;
+    font-size: 7vh;
     left : 50%;
     top : 50%;
     height: 5vh;
     width: 20vw;
     transform : translate(-50%, -50%);
     color: var(--forgroung-color);
+    white-space: nowrap;
 }

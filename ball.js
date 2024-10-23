@@ -29,12 +29,10 @@ export default class Ball{
 
     reset(){
         this.x= 53;
+        //this.x = paddle.position + 3
         this.y= 2;
         this.gameStarted= false;
-        //const heading = (2 * Math.PI)/8;
-        //this.direction = {x: Math.cos(heading), y: Math.sin(heading)}
         this.direction = {x:0, y:0}
-       
         this.velocity = INITIAL_VELOCITY
     }
 
@@ -69,14 +67,29 @@ export default class Ball{
         }
     
 
-        if (rect.bottom > borderRect.bottom || rect.top < borderRect.top){
-           this.y = oldY
-            this.direction.y *= -1;
-        }
+        // if (rect.bottom > borderRect.bottom || rect.top < borderRect.top){
+        //    this.y = oldY
+        //     this.direction.y *= -1;
+        //     const lives = document.getElementById("lives");
+        //     lives.textContent = parseFloat(lives.textContent) - 1 
+        // }
+        if ( rect.top < borderRect.top){
 
-        if (rect.left < borderRect.left || rect.right >borderRect.right){
+            this.y = oldY
+            this.direction.y *= -1;
+
+         }else if (rect.left < borderRect.left || rect.right >borderRect.right){
+
             this.x = oldX
             this.direction.x *= -1;
+
+        } else  if (rect.bottom > borderRect.bottom){
+
+            // this.y = oldY
+            // this.direction.y *= -1;
+            this.reset();
+            const lives = document.getElementById("lives");
+            lives.textContent = parseInt(lives.textContent) - 1
         }
         
 

@@ -8,6 +8,8 @@ const border = new Border(document.getElementById("border"))
 const paddle = new Paddle(document.getElementById("paddle"))
 const borderElement = document.getElementById("border")
 const score = document.getElementById("score")
+const lives = document.getElementById("lives")
+let currentLives = parseInt(lives.textContent)
 const borderRect = border.rect()
 const paddleRect = paddle.rect();
 let lastTime;
@@ -18,7 +20,6 @@ let lvl = 1;
 let winCounter;
 let gameStart = false;
 let gameEnd = false;
-let live = 3;
 const winGame = 3;
 
 // add block to the board
@@ -42,11 +43,20 @@ lvl++;
 level(lvl);
 } // to be edited to detect game winning
 
+if (currentLives > parseInt(lives.textContent)){
+    console.log(lives.textContent)
+    ball.reset();
+    gameStart = false;
+    currentLives = parseInt(lives.textContent);
+} 
+
 if (score.textContent == winCounter  && lvl == winGame && !gameEnd) {
-    console.log("game ended");
     Pause();
-    winScreen();
-}else{
+    endScreen("WINNER");
+}else if (lives.textContent == 0){
+    console.log("game ended");
+    endScreen("YOU LOSE")
+} else {
     window.requestAnimationFrame(update)
 }
 }
@@ -59,7 +69,9 @@ window.requestAnimationFrame(update);
 document.addEventListener("mousemove", function(m){
 mouseX = m.x
    if (gameOn || !gameStart){ 
-    paddle.paddleMove(mouseX )
+    if (!gameEnd){
+    paddle.paddleMove(mouseX)
+    }
 ;} 
 })
 
@@ -108,9 +120,10 @@ function Pause() {
 }
 
 function start(){
-
+console.log("start1")
     if (!gameStart){
         gameOn = true;
+        console.log("start2")
         ball.start();
         paddle.paddleMove(mouseX); 
     }
@@ -124,11 +137,13 @@ document.addEventListener("mousedown",e=>{
 })
 
 
-function winScreen(){
-    const winner = document.createElement("div");
-    winner.className = "winner";
-    winner.textContent = "WINNER";
-    borderElement.appendChild(winner);
+function endScreen(states){
+    const endingStatus = document.createElement("div");
+    endingStatus.className = "ending";
+    endingStatus.textContent = states;
+    borderElement.appendChild(endingStatus);
+    ball.ballElem.remove();
     gameEnd = true;
-    console.log(gameEnd);
+    console.log(endingStatus);
+
 }
