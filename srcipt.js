@@ -36,13 +36,16 @@ if (lastTime != null){
 }
 lastTime = time;
 
-if (score.textContent == winCounter  && gameOn && lvl < winGame) { 
+// invoke new game is player destroy all bircks
+if (score.textContent == winCounter  && gameOn && lvl < winGame) {
 ball.reset();
 gameStart = false; 
 lvl++;
 level(lvl);
-} // to be edited to detect game winning
+} 
 
+
+// reset paddle and ball state when losing live
 if (currentLives > parseInt(lives.textContent)){
     console.log(lives.textContent)
     ball.reset();
@@ -50,6 +53,7 @@ if (currentLives > parseInt(lives.textContent)){
     currentLives = parseInt(lives.textContent);
 } 
 
+// detect winning of losing game according to live lose of final level reached
 if (score.textContent == winCounter  && lvl == winGame && !gameEnd) {
     Pause();
     endScreen("WINNER");
@@ -57,15 +61,14 @@ if (score.textContent == winCounter  && lvl == winGame && !gameEnd) {
     console.log("game ended");
     endScreen("YOU LOSE")
 } else {
-    window.requestAnimationFrame(update)
+    window.requestAnimationFrame(update) // game running loop
 }
 }
 
-window.requestAnimationFrame(update);
+window.requestAnimationFrame(update); //start game loop
 
 
-// move paddle with mouse
-
+// move paddle with mouse x
 document.addEventListener("mousemove", function(m){
 mouseX = m.x
    if (gameOn || !gameStart){ 
@@ -80,7 +83,7 @@ document.addEventListener("keydown", e=>{
     if (e.code === "Space"){
         Pause()
     } 
-    // testing
+    // testing use A botton break all bircks (fire ball and press A before hitting any bircks)
     if(e.code ==="KeyA"){
         blocks.forEach(element => {
             element.collision()
@@ -89,12 +92,12 @@ document.addEventListener("keydown", e=>{
     }
 })
 
-
+// add blocks to the board
 function level(lvl){
     blocks = []
-    const blockHeight = 3//window.innerHeight*0.02;
-    const blockWidth = 15//window.innerWidth*0.1;
-    const leftSpace = 5//window.innerWidth*0.05;
+    const blockHeight = 3;  // % of screen height
+    const blockWidth = 15; // % of screen width
+    const leftSpace = 5; // % of screen width
     for (let row =1; row <= lvl+2; row++) {
         for (let i = 0; i <6 ; i++) {
            const block = new Block( leftSpace + blockWidth* i, blockHeight * row * 1.5, borderElement)
@@ -105,6 +108,7 @@ function level(lvl){
     winCounter = parseFloat(score.textContent) + blocks.length;
 }
 
+// pause and unpase game using Space bar
 function Pause() {
     if (gameStart){
     if (gameOn){
@@ -119,24 +123,27 @@ function Pause() {
     console.log(gameOn)
 }
 
+
+// detect if the game started or not to allow paddle more and lunch the ball
 function start(){
-console.log("start1")
+
     if (!gameStart){
         gameOn = true;
-        console.log("start2")
         ball.start();
         paddle.paddleMove(mouseX); 
     }
     gameStart = true;
 }
 
+
+// use mouse left click to fire the ball
 document.addEventListener("mousedown",e=>{
     if (e.button === 0 ){
         start();
     }
 })
 
-
+// add a winning or losing statment in the middle of the screen
 function endScreen(states){
     const endingStatus = document.createElement("div");
     endingStatus.className = "ending";

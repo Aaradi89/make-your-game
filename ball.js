@@ -29,7 +29,6 @@ export default class Ball{
 
     reset(){
         this.x= 53;
-        //this.x = paddle.position + 3
         this.y= 2;
         this.gameStarted= false;
         this.direction = {x:0, y:0}
@@ -67,12 +66,6 @@ export default class Ball{
         }
     
 
-        // if (rect.bottom > borderRect.bottom || rect.top < borderRect.top){
-        //    this.y = oldY
-        //     this.direction.y *= -1;
-        //     const lives = document.getElementById("lives");
-        //     lives.textContent = parseFloat(lives.textContent) - 1 
-        // }
         if ( rect.top < borderRect.top){
 
             this.y = oldY
@@ -85,14 +78,11 @@ export default class Ball{
 
         } else  if (rect.bottom > borderRect.bottom){
 
-            // this.y = oldY
-            // this.direction.y *= -1;
             this.reset();
             const lives = document.getElementById("lives");
             lives.textContent = parseInt(lives.textContent) - 1
         }
         
-
 
         if (
             paddleRect.left <= rect.right &&
@@ -100,6 +90,19 @@ export default class Ball{
             paddleRect.bottom >= rect.top &&
             paddleRect.top <= rect.bottom){
                 
+
+                // testing
+                // Adjust ball position to prevent it from getting stuck
+    if (this.direction.x > 0 && this.x < paddle.position) {
+        this.x = paddleRect.left - rect.width;
+    } else if (this.direction.x < 0 && this.x > paddle.position) {
+        this.x = paddleRect.right;
+    }
+
+                // testing
+
+
+
                 this.x = oldX
                 this.y = oldY
 
@@ -117,33 +120,60 @@ if (this.direction.x > 0 && this.x < paddle.position ){
             }
         
 
-        if (blocks.some(block =>{
+        // if (blocks.some(block =>{
+        //     const blockRect = block.rect();
+        //     if(
+        //     blockRect.left <= rect.right &&
+        //     blockRect.right >= rect.left &&
+        //     blockRect.bottom >= rect.top &&
+        //     blockRect.top <= rect.bottom
+        //     ){
+        //         this.x = oldX
+        //         this.y = oldY
+
+
+        //         if (blockRect.left >= rect.right ||
+        //             blockRect.right <= rect.left){
+        //                 this.direction.x *= -1;
+        //             } else {
+        //                 this.direction.y *= -1;  
+        //             }
+
+        //     block.collision()
+        //     }
+        // })){}
+        if (blocks.some(block => {
             const blockRect = block.rect();
-            if(
-            blockRect.left <= rect.right &&
-            blockRect.right >= rect.left &&
-            blockRect.bottom >= rect.top &&
-            blockRect.top <= rect.bottom
-            ){
-                this.x = oldX
-                this.y = oldY
-                // console.log(" ball R  : " +   rect.right)
-                // console.log(" Ball L  : " +  rect.left)
-                // console.log(" blockRect \nL: " + blockRect.left + "\nR: " + blockRect.right + "\nB: " + blockRect.bottom + "\nT: " + blockRect.top )
-                // this.x = oldX
-                // this.y = oldY
-
-                if (blockRect.left >= rect.right ||
-                    blockRect.right <= rect.left){
-                        this.direction.x *= -1;
-                        console.log("X changed : " +  this.direction)
-                    } else {
-                        this.direction.y *= -1;  
-                        //console.log("Y changed : " +  this.direction)
-                    }
-
-            block.collision()
+            if (
+                blockRect.left <= rect.right &&
+                blockRect.right >= rect.left &&
+                blockRect.bottom >= rect.top &&
+                blockRect.top <= rect.bottom
+            ) {
+                this.x = oldX;
+                this.y = oldY;
+        
+                // Determine the collision side
+                const overlapLeft = rect.right - blockRect.left;
+                const overlapRight = blockRect.right - rect.left;
+                const overlapTop = rect.bottom - blockRect.top;
+                const overlapBottom = blockRect.bottom - rect.top;
+        
+                const minOverlap = Math.min(overlapLeft, overlapRight, overlapTop, overlapBottom);
+        
+                if (minOverlap === overlapLeft || minOverlap === overlapRight) {
+                    // Side collision
+                    this.direction.x *= -1;
+                } else {
+                    // Top or bottom collision
+                    this.direction.y *= -1;
+                }
+        
+                block.collision();
+                return true; // Exit the loop after handling the collision
             }
-        })){}
+        })) {}
+        
+        
     }
 }    
