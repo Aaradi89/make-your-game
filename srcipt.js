@@ -12,8 +12,7 @@ const timer = new Timer(document.getElementById("timer"))
 const score = document.getElementById("score")
 const lives = document.getElementById("lives")
 let currentLives = parseInt(lives.textContent)
-const borderRect = border.rect()
-const paddleRect = paddle.rect();
+let timerOn
 let lastTime;
 let gameOn = false;
 let mouseX;
@@ -38,7 +37,7 @@ if (lastTime != null){
 }
 lastTime = time;
 
-// invoke new game is player destroy all bircks
+// invoke new game if player destroy all bircks
 if (score.textContent == winCounter  && gameOn && lvl < winGame) {
 ball.reset();
 gameStart = false; 
@@ -58,9 +57,11 @@ if (currentLives > parseInt(lives.textContent)){
 // detect winning of losing game according to live lose of final level reached
 if (score.textContent == winCounter  && lvl == winGame && !gameEnd) {
     Pause();
+    timer.pause();
     endScreen("WINNER");
 }else if (lives.textContent == 0){
     console.log("game ended");
+    timer.pause();
     endScreen("YOU LOSE")
 } else {
     window.requestAnimationFrame(update) // game running loop
@@ -114,10 +115,12 @@ function level(lvl){
 function Pause() {
     if (gameStart){
     if (gameOn){
-        ball.pause()
+        timer.pause();
+        ball.pause();
         gameOn = false
     } else if (!gameOn){
-        ball.resume()
+        ball.resume();
+        timer.start();
         paddle.paddleMove(mouseX) 
         gameOn = true
     }
@@ -129,10 +132,11 @@ function Pause() {
 // detect if the game started or not to allow paddle more and lunch the ball
 function start(){
     if (!gameStart){
-        timer.start()
         gameOn = true;
         ball.start();
         paddle.paddleMove(mouseX); 
+        timer.start();
+            
     }
     gameStart = true;
 }
@@ -156,3 +160,5 @@ function endScreen(states){
     console.log(endingStatus);
 
 }
+
+
