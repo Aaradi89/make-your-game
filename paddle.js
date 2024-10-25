@@ -1,7 +1,7 @@
 import Border from "./border.js";
 
 const border = new Border(document.getElementById("border"))
-const borderRect = border.rect() 
+//const borderRect = border.rect() 
 export default class Paddle{
     constructor(paddleE){
         this.paddleElem = paddleE
@@ -28,6 +28,7 @@ export default class Paddle{
 
     paddleMove(x){
         const paddleWidth = this.rect().width
+        const borderRect = border.rect()
         
         if (x >= borderRect.left + paddleWidth/2 && x <= borderRect.right - paddleWidth/2){
         this.position = ((x- borderRect.left) / (borderRect.width)) * 100

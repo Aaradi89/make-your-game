@@ -119,29 +119,7 @@ if (this.direction.x > 0 && this.x < paddle.position ){
                
             }
         
-
-        // if (blocks.some(block =>{
-        //     const blockRect = block.rect();
-        //     if(
-        //     blockRect.left <= rect.right &&
-        //     blockRect.right >= rect.left &&
-        //     blockRect.bottom >= rect.top &&
-        //     blockRect.top <= rect.bottom
-        //     ){
-        //         this.x = oldX
-        //         this.y = oldY
-
-
-        //         if (blockRect.left >= rect.right ||
-        //             blockRect.right <= rect.left){
-        //                 this.direction.x *= -1;
-        //             } else {
-        //                 this.direction.y *= -1;  
-        //             }
-
-        //     block.collision()
-        //     }
-        // })){}
+            // change direction when colliding with blocks and destroy the block
         if (blocks.some(block => {
             const blockRect = block.rect();
             if (

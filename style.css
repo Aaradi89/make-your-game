@@ -46,13 +46,38 @@ body {
     --y: 2;
     border-radius: 50%;
     position: absolute;
-    background-color: var(--forgroung-color);
+    /* background-color: var(--forgroung-color); */
     height: 2vh;
     width: 2vh;
     transform: translate(-50%, -50%);
     left: calc(var(--x)* 1%);
     bottom: calc(var(--y)* 1%);
+    background-image: url("./Sprite/spr_ball_of_electricity_1.png");
+    background-size: 200% 200%;
+    background-position: 50% 50%;
+    
+
+    animation: play 0.4s steps(7) infinite;
+    animation: name duration timing-function delay iteration-count direction fill-mode;
 }
+
+
+/* @keyframes play {
+    from { background-image: url("./Sprite/spr_ball_of_electricity_1.png");}
+    to{background-image: url("./Sprite/spr_ball_of_electricity_2.png");}
+} */
+
+@keyframes play {
+    0% { background-image: url("./Sprite/spr_ball_of_electricity_1.png"); }
+    14.28% { background-image: url("./Sprite/spr_ball_of_electricity_2.png"); }
+    28.56% { background-image: url("./Sprite/spr_ball_of_electricity_3.png"); }
+    42.84% { background-image: url("./Sprite/spr_ball_of_electricity_4.png"); }
+    57.12% { background-image: url("./Sprite/spr_ball_of_electricity_5.png"); }
+    71.40% { background-image: url("./Sprite/spr_ball_of_electricity_6.png"); }
+    85.68% { background-image: url("./Sprite/spr_ball_of_electricity_7.png"); }
+    100% { background-image: url("./Sprite/spr_ball_of_electricity_1.png"); }
+}
+
 
 /* .score{
     display: flex;
