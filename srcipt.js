@@ -2,11 +2,13 @@ import Ball from "./ball.js";
 import Border from "./border.js";
 import Paddle from "./paddle.js";
 import Block from "./block.js";
+import Timer from "./timer.js";
 
 const ball = new Ball(document.getElementById("ball"))
 const border = new Border(document.getElementById("border"))
 const paddle = new Paddle(document.getElementById("paddle"))
 const borderElement = document.getElementById("border")
+const timer = new Timer(document.getElementById("timer"))
 const score = document.getElementById("score")
 const lives = document.getElementById("lives")
 let currentLives = parseInt(lives.textContent)
@@ -126,8 +128,8 @@ function Pause() {
 
 // detect if the game started or not to allow paddle more and lunch the ball
 function start(){
-
     if (!gameStart){
+        timer.start()
         gameOn = true;
         ball.start();
         paddle.paddleMove(mouseX); 

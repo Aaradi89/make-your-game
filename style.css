@@ -38,6 +38,7 @@ body {
     top: 50vh;
     left: 50vw;
     transform: translate(-50%, -50%);
+
 }
 
 .ball{
@@ -55,7 +56,8 @@ body {
     background-image: url("./Sprite/spr_ball_of_electricity_1.png");
     background-size: 200% 200%;
     background-position: 50% 50%;
-    
+
+
 
     animation: play 0.4s steps(7) infinite;
     animation: name duration timing-function delay iteration-count direction fill-mode;
@@ -119,4 +121,17 @@ body {
     transform : translate(-50%, -50%);
     color: var(--forgroung-color);
     white-space: nowrap;
+}
+
+
+
+.timer{
+    position: absolute;
+    top: 83vh;
+    left: 50vw;
+    transform: translateX(-50%);
+    font-weight: bold;
+    font-size: 7vh;
+    color: var(--forgroung-color);
+
 }
