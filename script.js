@@ -11,8 +11,9 @@ const borderElement = document.getElementById("border")
 const timer = new Timer(document.getElementById("timer"))
 const score = document.getElementById("score")
 const lives = document.getElementById("lives")
+const popup = document.getElementById("popup")
 let currentLives = parseInt(lives.textContent)
-let timerOn
+let startPopup = false
 let lastTime;
 let gameOn = false;
 let mouseX;
@@ -68,6 +69,7 @@ if (score.textContent == winCounter  && lvl == winGame && !gameEnd) {
 }
 }
 
+
 window.requestAnimationFrame(update); //start game loop
 
 
@@ -115,14 +117,11 @@ function level(lvl){
 function Pause() {
     if (gameStart){
     if (gameOn){
+        document.querySelector(".pause").style.display = "flex";
         timer.pause();
         ball.pause();
         gameOn = false
-    } else if (!gameOn){
-        ball.resume();
-        timer.start();
-        paddle.paddleMove(mouseX) 
-        gameOn = true
+
     }
     }
     console.log(gameOn)
@@ -145,9 +144,20 @@ function start(){
 // use mouse left click to fire the ball
 document.addEventListener("mousedown",e=>{
     if (e.button === 0 ){
+        if (startPopup){
         start();
+        }else {
+            startPopup = true;
+            popup.style.display = "none";
+        }
     }
 })
+
+// popup.addEventListener("click",e=>{
+//     startPopup = true;
+//     popup.style.display = "none";
+// })
+
 
 // add a winning or losing statment in the middle of the screen
 function endScreen(states){
@@ -162,3 +172,17 @@ function endScreen(states){
 }
 
 
+//continue
+document.getElementById("continue").addEventListener("click",e=>{
+    ball.resume();
+    timer.start();
+    paddle.paddleMove(mouseX) 
+    gameOn = true
+    document.querySelector(".pause").style.display = "none";
+})
+
+//restart game
+
+document.getElementById("restart").addEventListener("click",e=>{
+    location.reload();
+})
