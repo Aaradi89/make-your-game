@@ -8,23 +8,24 @@
     <title>Ali's Birck Breaker</title>
 </head>
 <body>
-    <table width="100%" >
+    <table width="100%">
         <tr>
-            <td align="right" width="50%" class="score">Score</td>
-            <td width="50%" class="score"id ="score">0</td>
+            <td align="center" width="33%" class="score">Score: <span id="score">0</span></td>
+            <td align="center" width="33%" class="score">Lives: <span id="lives">3</span></td>
+            <td align="center" width="33%" class="score">FPS: <span id="fps">60</span></td>
         </tr>
-        <tr>
-            <td align="right" width="50%" class="score">Lives</td>
-            <td width="50%" class="score"id ="lives">3</td>
-        </tr>
-        
     </table>
+    
     <div class="border" id="border">
         <div class="ball" id="ball"></div>
         <div class="paddle" id="paddle"></div>
     </div>
     <div class="timer" id="timer">
         00 : 00 : 00
+    </div>
+    
+  
+
     </div>
     </div>
 
@@ -47,6 +48,17 @@
         </button>
         <br><br>
         <button id="restart" type="button" class="restart  button">
+            Restart
+        </button>
+    </div>
+
+    <div class="popup restart" id="restartPopup">
+        <h1>GAME OVER!</h1>
+        
+        Click on the button to restart the game
+        <br><br>
+
+        <button id="gameOverRestart" type="button" class="restart  button">
             Restart
         </button>
     </div>

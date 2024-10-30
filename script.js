@@ -3,6 +3,9 @@ import Border from "./border.js";
 import Paddle from "./paddle.js";
 import Block from "./block.js";
 import Timer from "./timer.js";
+import './fps.js';
+
+
 
 const ball = new Ball(document.getElementById("ball"))
 const border = new Border(document.getElementById("border"))
@@ -62,8 +65,7 @@ if (score.textContent == winCounter  && lvl == winGame && !gameEnd) {
     endScreen("WINNER");
 }else if (lives.textContent == 0){
     console.log("game ended");
-    timer.pause();
-    endScreen("YOU LOSE")
+    gameOver();
 } else {
     window.requestAnimationFrame(update) // game running loop
 }
@@ -89,12 +91,12 @@ document.addEventListener("keydown", e=>{
         Pause()
     } 
     // testing use A botton break all bircks (fire ball and press A before hitting any bircks)
-    if(e.code ==="KeyA"){
-        blocks.forEach(element => {
-            element.collision()
-            console.log("collision")
-        });
-    }
+    // if(e.code ==="KeyA"){
+    //     blocks.forEach(element => {
+    //         element.collision()
+    //         console.log("collision")
+    //     });
+    // }
 })
 
 // add blocks to the board
@@ -127,6 +129,18 @@ function Pause() {
     console.log(gameOn)
 }
 
+// function to stop everything and show the popup to restart the game - alalaradi
+function gameOver(){
+    if (lives.textContent == 0){
+        timer.pause();
+        ball.ballElem.remove();
+        document.querySelector(".popup.restart").style.display = "flex";;
+        gameEnd = true;
+    }
+}
+
+
+
 
 // detect if the game started or not to allow paddle more and lunch the ball
 function start(){
@@ -143,7 +157,7 @@ function start(){
 
 // use mouse left click to fire the ball
 document.addEventListener("mousedown",e=>{
-    if (e.button === 0 ){
+    if (e.button === 0 && lives.textContent != 0 ){
         if (startPopup){
         start();
         }else {
@@ -181,8 +195,14 @@ document.getElementById("continue").addEventListener("click",e=>{
     document.querySelector(".pause").style.display = "none";
 })
 
-//restart game
+//restart game for pause menu
 
 document.getElementById("restart").addEventListener("click",e=>{
+    location.reload();
+})
+
+
+//restart game for game over menu - alalaradi
+document.getElementById("gameOverRestart").addEventListener("click",e=>{
     location.reload();
 })
