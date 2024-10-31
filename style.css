@@ -164,6 +164,11 @@ body {
     flex-direction: column;
  }
 
+ .win{
+    display: none; 
+    flex-direction: column;
+ }
+
 .button{
     /* background-color: var(--background-color); */
     height: 40%;

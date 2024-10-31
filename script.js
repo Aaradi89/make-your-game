@@ -60,11 +60,10 @@ if (currentLives > parseInt(lives.textContent)){
 
 // detect winning of losing game according to live lose of final level reached
 if (score.textContent == winCounter  && lvl == winGame && !gameEnd) {
-    Pause();
-    timer.pause();
-    endScreen("WINNER");
+    console.log("You Win!");
+    win();
 }else if (lives.textContent == 0){
-    console.log("game ended");
+    console.log("Game Over!");
     gameOver();
 } else {
     window.requestAnimationFrame(update) // game running loop
@@ -91,12 +90,12 @@ document.addEventListener("keydown", e=>{
         Pause()
     } 
     // testing use A botton break all bircks (fire ball and press A before hitting any bircks)
-    // if(e.code ==="KeyA"){
-    //     blocks.forEach(element => {
-    //         element.collision()
-    //         console.log("collision")
-    //     });
-    // }
+    if(e.code ==="KeyA"){
+        blocks.forEach(element => {
+            element.collision()
+            console.log("collision")
+        });
+    }
 })
 
 // add blocks to the board
@@ -129,7 +128,7 @@ function Pause() {
     console.log(gameOn)
 }
 
-// function to stop everything and show the popup to restart the game - alalaradi
+// function to stop everything and show the popup to restart the game for losing - alalaradi
 function gameOver(){
     if (lives.textContent == 0){
         timer.pause();
@@ -139,6 +138,15 @@ function gameOver(){
     }
 }
 
+// function to stop everything and show the popup to restart the game for winning - alalaradi
+function win(){
+    if (score.textContent == winCounter){
+        timer.pause();
+        ball.ballElem.remove();
+        document.querySelector(".popup.win").style.display = "flex";;
+        gameEnd = true;
+    }
+}
 
 
 
@@ -204,5 +212,10 @@ document.getElementById("restart").addEventListener("click",e=>{
 
 //restart game for game over menu - alalaradi
 document.getElementById("gameOverRestart").addEventListener("click",e=>{
+    location.reload();
+})
+
+//restart game for win menu - alalaradi
+document.getElementById("winRestart").addEventListener("click",e=>{
     location.reload();
 })
