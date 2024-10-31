@@ -6,3 +6,4 @@ Not Done:
 - Add Permenant Refresh Button in the homepage.
 - Fix some console.log outputs.
 - Modify README.md file and explain how to make python server to run the game (using cmd : python3 -m http.server) instead of using Live Server. 
+- Add Level Counter to main screen
