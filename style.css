@@ -136,6 +136,21 @@ body {
 
 }
 
+.refresh{
+    display: flex;
+    position: absolute;
+    top: 46vh;
+    left: 25vw;
+    transform: translateX(-50%);
+    font-weight: bold;
+    font-size: 3vh;
+    color: var(--forgroung-color);
+    cursor: pointer;
+    background-color: hsl(200, 65%, 33%);
+    border-radius: 8px;
+
+} 
+
 .popup{
     display: flex;
     position: fixed;
@@ -168,6 +183,9 @@ body {
     display: none; 
     flex-direction: column;
  }
+
+
+
 
 .button{
     /* background-color: var(--background-color); */

@@ -15,6 +15,7 @@ const timer = new Timer(document.getElementById("timer"))
 const score = document.getElementById("score")
 const lives = document.getElementById("lives")
 const popup = document.getElementById("popup")
+// const level = document.getElementById("level") // to be fixed
 let currentLives = parseInt(lives.textContent)
 let startPopup = false
 let lastTime;
@@ -72,6 +73,8 @@ if (score.textContent == winCounter  && lvl == winGame && !gameEnd) {
 
 
 window.requestAnimationFrame(update); //start game loop
+
+
 
 
 // move paddle with mouse x
@@ -149,6 +152,15 @@ function win(){
 }
 
 
+// // detect score and update level accordingly.
+// if (score.textContent < 18  && !gameEnd) {
+// level.textContent = 1;
+// }else if (lives.textContent >= 18 && !gameEnd){
+//     level.textContent = 2;
+// } else {
+//     level.textContent = 3;
+// }
+
 
 // detect if the game started or not to allow paddle more and lunch the ball
 function start(){
@@ -193,7 +205,6 @@ function endScreen(states){
 
 }
 
-
 //continue
 document.getElementById("continue").addEventListener("click",e=>{
     ball.resume();
@@ -219,3 +230,10 @@ document.getElementById("gameOverRestart").addEventListener("click",e=>{
 document.getElementById("winRestart").addEventListener("click",e=>{
     location.reload();
 })
+
+//refresh page by clicking refresh button
+document.getElementById("refresh").addEventListener("click",e=>{
+    location.reload();
+})
+
+

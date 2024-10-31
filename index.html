@@ -10,16 +10,31 @@
 <body>
     <table width="100%">
         <tr>
-            <td align="center" width="33%" class="score">Score: <span id="score">0</span></td>
-            <td align="center" width="33%" class="score">Lives: <span id="lives">3</span></td>
-            <td align="center" width="33%" class="score">FPS: <span id="fps">60</span></td>
+            <td align="center" width="50%" class="score">Score: <span id="score">0</span></td>
+            <td align="center" width="50%" class="score">Lives: <span id="lives">3</span></td>
+            
         </tr>
     </table>
+
+    <table width="100%">
+    <tr>
+        <td align="center" width="50%" class="score">Level: <span id="level">1</span></td>
+        <td align="center" width="50%" class="score">FPS: <span id="fps">60</span></td>
+    </tr>
+    </table>
+
     
     <div class="border" id="border">
         <div class="ball" id="ball"></div>
         <div class="paddle" id="paddle"></div>
     </div>
+
+    <div class="refresh" id="refresh">
+        <button id="refreshButton" type="button" class="refresh">
+            Refresh
+        </button>
+    </div>
+
     <div class="timer" id="timer">
         00 : 00 : 00
     </div>
