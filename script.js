@@ -3,6 +3,9 @@ import Border from "./border.js";
 import Paddle from "./paddle.js";
 import Block from "./block.js";
 import Timer from "./timer.js";
+import './fps.js';
+
+
 
 const ball = new Ball(document.getElementById("ball"))
 const border = new Border(document.getElementById("border"))
@@ -12,6 +15,7 @@ const timer = new Timer(document.getElementById("timer"))
 const score = document.getElementById("score")
 const lives = document.getElementById("lives")
 const popup = document.getElementById("popup")
+// const level = document.getElementById("level") // to be fixed
 let currentLives = parseInt(lives.textContent)
 let startPopup = false
 let lastTime;
@@ -57,13 +61,11 @@ if (currentLives > parseInt(lives.textContent)){
 
 // detect winning of losing game according to live lose of final level reached
 if (score.textContent == winCounter  && lvl == winGame && !gameEnd) {
-    Pause();
-    timer.pause();
-    endScreen("WINNER");
+    console.log("You Win!");
+    win();
 }else if (lives.textContent == 0){
-    console.log("game ended");
-    timer.pause();
-    endScreen("YOU LOSE")
+    console.log("Game Over!");
+    gameOver();
 } else {
     window.requestAnimationFrame(update) // game running loop
 }
@@ -71,6 +73,8 @@ if (score.textContent == winCounter  && lvl == winGame && !gameEnd) {
 
 
 window.requestAnimationFrame(update); //start game loop
+
+
 
 
 // move paddle with mouse x
@@ -127,6 +131,36 @@ function Pause() {
     console.log(gameOn)
 }
 
+// function to stop everything and show the popup to restart the game for losing - alalaradi
+function gameOver(){
+    if (lives.textContent == 0){
+        timer.pause();
+        ball.ballElem.remove();
+        document.querySelector(".popup.restart").style.display = "flex";;
+        gameEnd = true;
+    }
+}
+
+// function to stop everything and show the popup to restart the game for winning - alalaradi
+function win(){
+    if (score.textContent == winCounter){
+        timer.pause();
+        ball.ballElem.remove();
+        document.querySelector(".popup.win").style.display = "flex";;
+        gameEnd = true;
+    }
+}
+
+
+// // detect score and update level accordingly.
+// if (score.textContent < 18  && !gameEnd) {
+// level.textContent = 1;
+// }else if (lives.textContent >= 18 && !gameEnd){
+//     level.textContent = 2;
+// } else {
+//     level.textContent = 3;
+// }
+
 
 // detect if the game started or not to allow paddle more and lunch the ball
 function start(){
@@ -143,7 +177,7 @@ function start(){
 
 // use mouse left click to fire the ball
 document.addEventListener("mousedown",e=>{
-    if (e.button === 0 ){
+    if (e.button === 0 && lives.textContent != 0 ){
         if (startPopup){
         start();
         }else {
@@ -171,7 +205,6 @@ function endScreen(states){
 
 }
 
-
 //continue
 document.getElementById("continue").addEventListener("click",e=>{
     ball.resume();
@@ -181,8 +214,26 @@ document.getElementById("continue").addEventListener("click",e=>{
     document.querySelector(".pause").style.display = "none";
 })
 
-//restart game
+//restart game for pause menu
 
 document.getElementById("restart").addEventListener("click",e=>{
     location.reload();
 })
+
+
+//restart game for game over menu - alalaradi
+document.getElementById("gameOverRestart").addEventListener("click",e=>{
+    location.reload();
+})
+
+//restart game for win menu - alalaradi
+document.getElementById("winRestart").addEventListener("click",e=>{
+    location.reload();
+})
+
+//refresh page by clicking refresh button
+document.getElementById("refresh").addEventListener("click",e=>{
+    location.reload();
+})
+
+
