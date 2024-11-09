@@ -1,13 +1,10 @@
 Done:
 - Modify Winning Screen to show Option of Playing again (restart).
 - Compile Js files into one file. + remove Js type=module from html. (I used defer to allow script to pre-load)
+- Add Level Counter to main screen 
+- Add Permenant Refresh Button in the homepage.  - added and functioning well but need to style it.
 
 Not Done:
 
 - Fix some console.log outputs.
 - Modify README.md file and explain how to make python server to run the game (using cmd : python3 -m http.server) instead of using Live Server. 
-
-
-In progress:
-- Add Level Counter to main screen - not linked in js yet.
-- Add Permenant Refresh Button in the homepage.  - added and functioning well but need to style it.
