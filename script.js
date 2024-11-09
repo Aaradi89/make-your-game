@@ -1,12 +1,329 @@
-import Ball from "./ball.js";
-import Border from "./border.js";
-import Paddle from "./paddle.js";
-import Block from "./block.js";
-import Timer from "./timer.js";
-import './fps.js';
+// <-------| Timer Class |-------->
+class Timer {
+    constructor(timerElem){
+    this.timerElem = timerElem;
+    this.timerOn = false;
+    this.hour = 0;
+    this.minute = 0;
+    this.second = 0;
+    this.millisecond = 0;
+    }
+    
+    start(){
+        
+    
+         if (!this.timerOn){
+            this.timerOn = true;
+         this.int = setInterval(() => {
+            this.millisecond += 10;
+            if (this.millisecond == 1000){
+            this.second += 1;
+            this.millisecond = 0;
+            if (this.second == 60) {
+                this.minute += 1;
+                this.second = 0;
+                if (this.minute == 60) {
+                    this.hour += 1;
+                    this.minute = 0;
+                    if (this.hour == 100){
+                        this.hour = 0;
+                    }
+                }
+            }
+        }
+    
+            let h = this.hour < 10 ? "0" + this.hour : this.hour;
+            let m = this.minute < 10 ? "0" + this.minute : this.minute;
+            let s = this.second < 10 ? "0" + this.second : this.second;
+    
+            this.timerElem.innerHTML =`${h} : ${m} : ${s}`
+           }, 10);
+        }
+    
+        
+     }
+    
+    
+    pause(){
+        clearInterval(this.int)
+        this.timerOn = false;
+    
+    }
+    
+    reset(){
+    
+    this.hour = 0;
+    this.minute = 0;
+    this.second = 0;
+    this.timerElem.innerHTML =`${h} : ${m} : ${s}`
+    }
+    
+    }
+    
+// <-------| Border Class |-------->
+class Border{
+    constructor(borderE){
+        this.borderElem = borderE;
+    }
+rect(){
+    return this.borderElem.getBoundingClientRect();
+}
+
+}
+
+// <-------| Block Class |-------->
+class Block{
+    constructor(x, y, borderElement){
+        this.block = document.createElement('div');
+        this.block.className = 'block';
+        this.block.id = 'block';
+
+        this.block.style.left =  x + '%';
+        this.block.style.top = y + '%';
+        borderElement.appendChild(this.block);
+
+    }
+    rect(){
+        return this.block.getBoundingClientRect();
+    }
+
+    
+    collision(){
+        const score = document.getElementById('score');
+        score.textContent = parseInt(score.textContent) + 1
+        this.block.remove()
+    }
+}
+
+// <-------| Ball Class |-------->
+class Ball{
+
+    constructor(ballElem){
+    this.ballElem = ballElem
+    this.reset()
+    }
+
+    get x(){
+        return parseFloat(getComputedStyle(this.ballElem).getPropertyValue("--x"));
+    }
+
+    set x(value){
+        this.ballElem.style.setProperty("--x", value);
+    }
+
+    get y(){
+        return parseFloat(getComputedStyle(this.ballElem).getPropertyValue("--y"));
+    }
+
+    set y(value){
+        this.ballElem.style.setProperty("--y", value);
+    }
+
+    rect(){
+        return this.ballElem.getBoundingClientRect();
+    }
+
+    reset(){
+        this.x= 53;
+        this.y= 2;
+        this.gameStarted= false;
+        this.direction = {x:0, y:0}
+        this.velocity = INITIAL_VELOCITY
+    }
+
+    start(){
+        this.gameStarted = true;
+        const heading = (2 * Math.PI)/8;
+        this.direction = {x: Math.cos(heading), y: Math.sin(heading)}
+    }
+
+    pause(){
+        this.oldDirection = this.direction
+        this.direction = {x:0, y:0}
+    }
+
+    resume(){
+        this.direction = this.oldDirection
+    }
+
+    update(delta, border, paddle, blocks){
+        const paddleRect = paddle.rect()
+        const borderRect =  border.rect()
+        const oldX = this.x
+        const oldY = this.y 
+
+        this.x +=  this.direction.x * this.velocity * delta;
+        this.y +=  this.direction.y * this.velocity * delta;
+
+        const rect = this.rect();
+        
+        if (!this.gameStarted){
+            this.x = paddle.position + 3
+        }
+    
+
+        if ( rect.top < borderRect.top){
+
+            this.y = oldY
+            this.direction.y *= -1;
+
+         }else if (rect.left < borderRect.left || rect.right >borderRect.right){
+
+            this.x = oldX
+            this.direction.x *= -1;
+
+        } else  if (rect.bottom > borderRect.bottom){
+
+            this.reset();
+            const lives = document.getElementById("lives");
+            lives.textContent = parseInt(lives.textContent) - 1
+        }
+        
+
+        if (
+            paddleRect.left <= rect.right &&
+            paddleRect.right >= rect.left &&
+            paddleRect.bottom >= rect.top &&
+            paddleRect.top <= rect.bottom){
+                
+
+                // testing
+                // Adjust ball position to prevent it from getting stuck
+    if (this.direction.x > 0 && this.x < paddle.position) {
+        this.x = paddleRect.left - rect.width;
+    } else if (this.direction.x < 0 && this.x > paddle.position) {
+        this.x = paddleRect.right;
+    }
+
+                // testing
 
 
 
+                this.x = oldX
+                this.y = oldY
+
+if (this.direction.x > 0 && this.x < paddle.position ){
+    this.direction.x *= -1;
+    
+} else if (this.direction.x < 0 && this.x > paddle.position ){
+    this.direction.x *= -1;
+    
+}
+
+
+                this.direction.y *= -1;
+               
+            }
+        
+            // change direction when colliding with blocks and destroy the block
+        if (blocks.some(block => {
+            const blockRect = block.rect();
+            if (
+                blockRect.left <= rect.right &&
+                blockRect.right >= rect.left &&
+                blockRect.bottom >= rect.top &&
+                blockRect.top <= rect.bottom
+            ) {
+                this.x = oldX;
+                this.y = oldY;
+        
+                // Determine the collision side
+                const overlapLeft = rect.right - blockRect.left;
+                const overlapRight = blockRect.right - rect.left;
+                const overlapTop = rect.bottom - blockRect.top;
+                const overlapBottom = blockRect.bottom - rect.top;
+        
+                const minOverlap = Math.min(overlapLeft, overlapRight, overlapTop, overlapBottom);
+        
+                if (minOverlap === overlapLeft || minOverlap === overlapRight) {
+                    // Side collision
+                    this.direction.x *= -1;
+                } else {
+                    // Top or bottom collision
+                    this.direction.y *= -1;
+                }
+        
+                block.collision();
+                return true; // Exit the loop after handling the collision
+            }
+        })) {}
+        
+        
+    }
+}    
+
+// <-------| Paddle Class |-------->
+
+class Paddle{
+    constructor(paddleE){
+        this.paddleElem = paddleE
+    }
+
+    rect(){
+        return this.paddleElem.getBoundingClientRect();
+    }
+
+    get position(){
+        return parseFloat(getComputedStyle(this.paddleElem).getPropertyValue("--position"))
+    }
+    set position(value){
+        this.paddleElem.style.setProperty("--position", value)
+    }
+    get width(){
+        return parseFloat(getComputedStyle(this.paddleElem).getPropertyValue("--width"))
+    }
+    set width(value){
+        this.paddleElem.style.setProperty("--width", value)
+    }
+
+    
+
+    paddleMove(x){
+        const paddleWidth = this.rect().width
+        const borderRect = border.rect()
+        
+        if (x >= borderRect.left + paddleWidth/2 && x <= borderRect.right - paddleWidth/2){
+        this.position = ((x- borderRect.left) / (borderRect.width)) * 100
+        
+        } else if (x <= borderRect.left + paddleWidth/2){
+        this.position = (paddleWidth/2) / (borderRect.width) * 100
+        
+        }  else if (x >= borderRect.right - paddleWidth/2){
+         this.position = (borderRect.width - paddleWidth/2)/ (borderRect.width) * 100
+        }
+    }
+}
+
+// <-------| FPS Meter |-------->
+let lastFrameTime = performance.now();
+let fpsDisplay = document.getElementById("fps");
+let smoothedFPS = 60; // Initial guess for FPS
+const smoothingFactor = 0.1; // Adjust between 0 (no smoothing) and 1 (very smooth)
+
+// Function to update FPS using EMA
+function updateFPS() {
+    const currentFrameTime = performance.now();
+    const delta = currentFrameTime - lastFrameTime;
+    const fps = 1000 / delta;
+
+    // Apply exponential moving average
+    smoothedFPS = (fps * smoothingFactor) + (smoothedFPS * (1 - smoothingFactor));
+    fpsDisplay.textContent = Math.round(smoothedFPS);
+
+    // Update last frame time
+    lastFrameTime = currentFrameTime;
+
+    // Request the next animation frame
+    requestAnimationFrame(updateFPS);
+}
+
+// Start the FPS calculation loop
+requestAnimationFrame(updateFPS);
+
+
+// <-------| Game Logic |-------->
+let currentLevel = 1;
+const INITIAL_VELOCITY = 0.09
 const ball = new Ball(document.getElementById("ball"))
 const border = new Border(document.getElementById("border"))
 const paddle = new Paddle(document.getElementById("paddle"))
@@ -15,7 +332,6 @@ const timer = new Timer(document.getElementById("timer"))
 const score = document.getElementById("score")
 const lives = document.getElementById("lives")
 const popup = document.getElementById("popup")
-// const level = document.getElementById("level") // to be fixed
 let currentLives = parseInt(lives.textContent)
 let startPopup = false
 let lastTime;
@@ -102,21 +418,27 @@ document.addEventListener("keydown", e=>{
 })
 
 // add blocks to the board
-function level(lvl){
-    blocks = []
+function level(lvl) {
+    blocks = [];
     const blockHeight = 3;  // % of screen height
-    const blockWidth = 15; // % of screen width
-    const leftSpace = 5; // % of screen width
-    for (let row =1; row <= lvl+2; row++) {
-        for (let i = 0; i <6 ; i++) {
-           const block = new Block( leftSpace + blockWidth* i, blockHeight * row * 1.5, borderElement)
-         blocks.push(block);
+    const blockWidth = 15;  // % of screen width
+    const leftSpace = 5;    // % of screen width
+
+    // Loop to create blocks based on the level
+    for (let row = 1; row <= lvl + 2; row++) {
+        for (let i = 0; i < 6; i++) {
+            const block = new Block(leftSpace + blockWidth * i, blockHeight * row * 1.5, borderElement);
+            blocks.push(block);
         }
     }
-    // creat a couunter to know when is the lvl is finished
-    winCounter = parseFloat(score.textContent) + blocks.length;
-}
 
+    // Create a counter to track when the level is finished
+    winCounter = parseFloat(score.textContent) + blocks.length;
+
+    // Update the current level and display it in HTML
+    currentLevel = lvl;
+    updateLevelDisplay();
+}
 // pause and unpase game using Space bar
 function Pause() {
     if (gameStart){
@@ -235,5 +557,10 @@ document.getElementById("winRestart").addEventListener("click",e=>{
 document.getElementById("refresh").addEventListener("click",e=>{
     location.reload();
 })
+
+function updateLevelDisplay() {
+    document.getElementById("level").textContent = currentLevel;
+}
+
 
 

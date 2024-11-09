@@ -1,8 +1,9 @@
 Done:
 - Modify Winning Screen to show Option of Playing again (restart).
+- Compile Js files into one file. + remove Js type=module from html. (I used defer to allow script to pre-load)
 
 Not Done:
-- Compile Js files into one file. + remove Js type=module from html.
+
 - Fix some console.log outputs.
 - Modify README.md file and explain how to make python server to run the game (using cmd : python3 -m http.server) instead of using Live Server. 
 
