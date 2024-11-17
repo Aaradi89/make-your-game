@@ -97,8 +97,28 @@ body {
     font-size: 7vh;
     color: var(--forgroung-color);
     opacity: 0.6;
+    white-space: nowrap;
 }
 
+.end{
+    font-size: 3vh;
+    color: var(--background-color);
+    max-width: 100%; /* Keep text within container width */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.welcome{
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    font-size: 1vh;
+    /* color: var(--background-color); */
+    max-width: 100%; /* Keep text within container width */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 .block{
     position: absolute;
@@ -133,6 +153,7 @@ body {
     font-weight: bold;
     font-size: 7vh;
     color: var(--forgroung-color);
+    white-space: nowrap;
 
 }
 
