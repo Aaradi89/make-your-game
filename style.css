@@ -98,6 +98,8 @@ body {
     color: var(--forgroung-color);
     opacity: 0.6;
     white-space: nowrap;
+    will-change:transform;
+    transform: translateZ(1);
 }
 
 .end{
@@ -190,6 +192,7 @@ body {
     
 }
 
+
 .pause{
    display: none; 
    flex-direction: column;
@@ -198,22 +201,18 @@ body {
 .restart{
     display: none; 
     flex-direction: column;
- }
+    align-items: center;
+}
 
- .win{
+.win{
     display: none; 
     flex-direction: column;
- }
-
-
-
+}
 
 .button{
     /* background-color: var(--background-color); */
     height: 40%;
     width: 40%;
-
-
     background-color: hsl(200, 65%, 33%);
     border-radius: 8px;
     border-style: none;

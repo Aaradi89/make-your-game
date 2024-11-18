@@ -314,11 +314,11 @@ function updateFPS() {
     lastFrameTime = currentFrameTime;
 
     // Request the next animation frame
-    requestAnimationFrame(updateFPS);
+    // requestAnimationFrame(updateFPS);
 }
 
 // Start the FPS calculation loop
-requestAnimationFrame(updateFPS);
+// requestAnimationFrame(updateFPS);
 
 
 // <-------| Game Logic |-------->
@@ -351,7 +351,7 @@ level(lvl)
 
 // game loop logic
 function update (time){
-
+    updateFPS();
 if (lastTime != null){
     const delta = time - lastTime;
     ball.update(delta,border,paddle, blocks); 
@@ -369,7 +369,6 @@ level(lvl);
 
 // reset paddle and ball state when losing live
 if (currentLives > parseInt(lives.textContent)){
-    console.log(lives.textContent)
     ball.reset();
     gameStart = false;
     currentLives = parseInt(lives.textContent);
@@ -377,10 +376,10 @@ if (currentLives > parseInt(lives.textContent)){
 
 // detect winning of losing game according to live lose of final level reached
 if (score.textContent == winCounter  && lvl == winGame && !gameEnd) {
-    console.log("You Win!");
+    
     win();
 }else if (lives.textContent == 0){
-    console.log("Game Over!");
+    
     gameOver();
 } else {
     window.requestAnimationFrame(update) // game running loop
@@ -412,7 +411,7 @@ document.addEventListener("keydown", e=>{
     if(e.code ==="KeyA"){
         blocks.forEach(element => {
             element.collision()
-            console.log("collision")
+            
         });
     }
 })
@@ -450,7 +449,7 @@ function Pause() {
 
     }
     }
-    console.log(gameOn)
+    
 }
 
 // function to stop everything and show the popup to restart the game for losing - alalaradi
@@ -523,7 +522,7 @@ function endScreen(states){
     borderElement.appendChild(endingStatus);
     ball.ballElem.remove();
     gameEnd = true;
-    console.log(endingStatus);
+    
 
 }
 
