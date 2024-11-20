@@ -1,6 +1,6 @@
-# Ali's Brick Breaker Game
+# Brick Breaker Game
 
-Ali's Brick Breaker Game is a browser-based game developed using HTML, CSS, and JavaScript. It features classic gameplay with a paddle, ball, blocks, and lives tracking. The game is organized with modular JavaScript classes and files to manage each game component, enhancing readability and maintainability.
+Brick Breaker Game is developed by `alaradi0`, `alalaradi` and `ameshaim`, it is a browser-based game developed using HTML, CSS, and JavaScript. It features classic gameplay with a paddle, ball, blocks, and lives tracking. The game is organized with modular JavaScript classes and files to manage each game component, enhancing readability and maintainability.
 
 ## Table of Contents
 - [Project Structure](#project-structure)
@@ -19,12 +19,6 @@ The game is organized as follows:
 ├── index.html # Main HTML structure 
 ├── style.css # Game styles and animations
 ├── script.js # Main game logic and setup
-├── ball.js # Ball component logic 
-├── paddle.js # Paddle component logic 
-├── border.js # Border area and boundary logic 
-├── block.js # Block component logic for obstacles 
-├── timer.js # Timer logic for game duration 
-├── fps.js # FPS (Frames Per Second) counter 
 └── Sprite/ # Contains sprite images for ball animation
 ```
 
@@ -108,7 +102,7 @@ The main game loop and overall logic:
 - `start()`: Starts or resumes the game when the player interacts with the screen.
 - `endScreen(states)`: Displays end-game messages (e.g., "WINNER" or "YOU LOSE") based on game state.
 
-### `ball.js`
+### `Ball Class`
 The **Ball** class manages:
 1. **Positioning**: Updates ball’s `x` and `y` coordinates.
 2. **Direction and Velocity**: Uses `direction` and `velocity` properties to control movement speed and heading.
@@ -117,29 +111,29 @@ The **Ball** class manages:
    - Paddle: Ball bounces based on collision angle.
    - Blocks: Ball bounces and destroys a block on impact.
 
-### `paddle.js`
+### `Paddle Class`
 The **Paddle** class manages:
 1. **Position Control**: Ensures the paddle moves within the boundaries.
 2. **Boundary Checks**: Limits paddle movement to prevent it from leaving the game border.
 3. **Method (`paddleMove(x)`)**: Adjusts the paddle position based on mouse movement.
 
-### `block.js`
+### `Block Class`
 The **Block** class manages individual blocks:
 1. **Positioning**: Creates block elements dynamically based on level layout.
 2. **Collision Handling**: Removes the block and increments the score upon collision.
 3. **Level Progress**: Tracks remaining blocks to determine level completion.
 
-### `border.js`
+### `Border Class`
 The **Border** class provides:
 - **Boundary Rectangles**: Used for collision detection and positioning checks.
 - Centralized access to game area boundaries, used by `Ball` and `Paddle`.
 
-### `timer.js`
+### `Timer Class`
 The **Timer** class tracks game duration:
 1. **Start, Pause, and Reset** Functions: Starts or pauses time based on game state.
 2. **Interval Updates**: Updates time every 10 milliseconds, converting milliseconds to hours, minutes, and seconds for display.
 
-### `fps.js`
+### `FPS Meter`
 The **FPS Counter** calculates FPS in real-time:
 1. Uses **Exponential Moving Average (EMA)** to stabilize the FPS value display.
 2. **`requestAnimationFrame`**: Tied to the main game loop to update FPS with each frame, improving real-time performance feedback.

@@ -314,11 +314,11 @@ function updateFPS() {
     lastFrameTime = currentFrameTime;
 
     // Request the next animation frame
-    // requestAnimationFrame(updateFPS);
+    requestAnimationFrame(updateFPS);
 }
 
 // Start the FPS calculation loop
-// requestAnimationFrame(updateFPS);
+    requestAnimationFrame(updateFPS);
 
 
 // <-------| Game Logic |-------->
@@ -351,7 +351,7 @@ level(lvl)
 
 // game loop logic
 function update (time){
-    updateFPS();
+
 if (lastTime != null){
     const delta = time - lastTime;
     ball.update(delta,border,paddle, blocks); 
